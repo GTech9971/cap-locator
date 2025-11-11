@@ -1,0 +1,45 @@
+# KiCad
+fp-info-cache
+*backups
+
+# MPLAB X IDE
+Vtsk-Sensor.X/build/
+Vtsk-Sensor.X/debug/
+Vtsk-Sensor.X/dist/
+Vtsk-Sensor.X/out/
+Vtsk-Sensor.X/_build/
+Vtsk-Sensor.X/nbproject/private/
+
+# Generated files
+*.o
+*.obj
+*.hex
+*.elf
+*.lst
+*.sym
+*.mum
+*.hxl
+*.cmf
+*.sdb
+*.rlf
+*.p1
+*.d
+*.i
+
+# CMake
+cmake/
+_build/
+out/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VSCode
+.vscode/
+
+# Backup files
+*~
+*.bak
+*.tmp
