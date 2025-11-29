@@ -9,6 +9,12 @@ Vtsk-Sensor.X/dist/
 Vtsk-Sensor.X/out/
 Vtsk-Sensor.X/_build/
 Vtsk-Sensor.X/nbproject/private/
+firmware/CapLocator-HID.X/build/
+firmware/CapLocator-HID.X/debug/
+firmware/CapLocator-HID.X/dist/
+firmware/CapLocator-HID.X/out/
+firmware/CapLocator-HID.X/_build/
+firmware/CapLocator-HID.X/nbproject/private/
 
 # Generated files
 *.o
