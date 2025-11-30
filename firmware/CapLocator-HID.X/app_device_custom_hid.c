@@ -5,6 +5,7 @@
 #include <stdint.h>
 #include <string.h>
 
+#include <xc.h>
 #include "system.h"
 
 
@@ -40,6 +41,9 @@ volatile USB_HANDLE USBInHandle;
 #define CMD_STATUS 0x01   // ステータス問い合わせ (LED状態を読む)
 #define CMD_SET    0x02   // LED状態を書き換える
 
+#define LED_COUNT 5u
+#define LED_MASK  0x1Fu
+
 static uint8_t FeatureRxBuffer[FEATURE_REPORT_SIZE];
 static uint8_t FeatureTxBuffer[FEATURE_REPORT_SIZE];
 static uint8_t FeatureRxLen = 0;
@@ -47,6 +51,8 @@ static uint8_t LedState = 0;
 
 static void APP_BuildFeatureResponse(uint8_t reportId, uint8_t command);
 static void APP_FeatureReportReceived(void);
+static void APP_InitializeLeds(void);
+static void APP_UpdateLedOutputs(uint8_t mask);
 
 
 void APP_DeviceCustomHIDInitialize()
@@ -62,6 +68,7 @@ void APP_DeviceCustomHIDInitialize()
     USBOutHandle = (volatile USB_HANDLE)HIDRxPacket(CUSTOM_DEVICE_HID_EP,(uint8_t*)&ReceivedDataBuffer[0],HID_INT_OUT_EP_SIZE);
 
     APP_BuildFeatureResponse(0x00, 0x00);
+    APP_InitializeLeds();
 }
 
 
@@ -122,7 +129,7 @@ static void APP_BuildFeatureResponse(uint8_t reportId, uint8_t command)
     memset(FeatureTxBuffer, 0x00, FEATURE_REPORT_SIZE);
     FeatureTxBuffer[0] = reportId;
     FeatureTxBuffer[1] = command;
-    FeatureTxBuffer[2] = (LedState ? 1u : 0u);
+    FeatureTxBuffer[2] = LedState;
 }
 
 static void APP_FeatureReportReceived(void)
@@ -150,7 +157,7 @@ static void APP_FeatureReportReceived(void)
         case CMD_SET:
             if(len > 2)
             {
-                LedState = (FeatureRxBuffer[2] != 0u);
+                APP_UpdateLedOutputs(FeatureRxBuffer[2]);
             }
             break;
         case CMD_STATUS:
@@ -160,6 +167,31 @@ static void APP_FeatureReportReceived(void)
     }
 
     APP_BuildFeatureResponse(reportId, command);
+}
+
+static void APP_InitializeLeds(void)
+{
+    // RC2〜RC5とRA4をLED出力に使う。電源投入時はすべて消灯。
+    ANSELC = 0x00;           // RCポートをデジタルIOに設定
+    ANSELA &= 0xEF;          // RA4をデジタルIOに設定（bit4=0）
+    TRISCbits.TRISC2 = 0;    // LED0
+    TRISCbits.TRISC3 = 0;    // LED1
+    TRISCbits.TRISC4 = 0;    // LED2
+    TRISCbits.TRISC5 = 0;    // LED3
+    TRISAbits.TRISA4 = 0;    // LED4
+
+    APP_UpdateLedOutputs(0x00);
+}
+
+static void APP_UpdateLedOutputs(uint8_t mask)
+{
+    LedState = (mask & LED_MASK);
+
+    LATCbits.LATC2 = ((LedState & 0x01u) != 0u);   // LED0
+    LATCbits.LATC3 = ((LedState & 0x02u) != 0u);   // LED1
+    LATCbits.LATC4 = ((LedState & 0x04u) != 0u);   // LED2
+    LATCbits.LATC5 = ((LedState & 0x08u) != 0u);   // LED3
+    LATAbits.LATA4 = ((LedState & 0x10u) != 0u);   // LED4
 }
 
 void APP_UserSetReportHandler(void)
