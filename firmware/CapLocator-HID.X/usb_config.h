@@ -167,11 +167,7 @@ please contact mla_licensing@microchip.com
 #define HID_INT_OUT_EP_SIZE     64
 #define HID_INT_IN_EP_SIZE      64
 #define HID_NUM_OF_DSC          1
-#define HID_RPT01_SIZE          31
-
-// Enable custom handlers for HID feature reports (used by cap-locator-cli)
-#define USER_GET_REPORT_HANDLER APP_UserGetReportHandler
-#define USER_SET_REPORT_HANDLER APP_UserSetReportHandler
+#define HID_RPT01_SIZE          29
 
 /** DEFINITIONS ****************************************************/
 

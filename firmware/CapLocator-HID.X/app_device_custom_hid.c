@@ -9,11 +9,11 @@
 #include "system.h"
 
 
-#define REPORT_ID = 0xFF
+#define REPORT_ID 0xFF
 // LEDステータスチェック
-#define CMD_STATUS = 0x01
+#define CMD_STATUS 0x01
 // LEDステータス変更
-#define CMD_SET = 0x02
+#define CMD_SET 0x02
 
 // LEDの数
 #define LED_COUNT 5u

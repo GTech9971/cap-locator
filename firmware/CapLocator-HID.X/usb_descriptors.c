@@ -249,7 +249,6 @@ const struct{uint8_t report[HID_RPT01_SIZE];}hid_rpt01={
     0x19, 0x01,             //      Usage Minimum 
     0x29, 0x40,             //      Usage Maximum 	//64 output usages total (0x01 to 0x40)
     0x91, 0x00,             //      Output (Data, Array, Abs): Instantiates output packet fields.  Uses same report size and count as "Input" fields, since nothing new/different was specified to the parser since the "Input" item.
-    0xB1, 0x00,             //      Feature (Data, Array, Abs): Vendor-defined feature report (control transfers)
     0xC0}                   // End Collection
 };                  
 

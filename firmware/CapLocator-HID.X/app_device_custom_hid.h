@@ -62,7 +62,3 @@ void APP_DeviceCustomHIDStart(void);
 *
 ********************************************************************/
 void APP_DeviceCustomHIDTasks(void);
-
-// Feature report handlers (used by cap-locator-cli)
-void APP_UserGetReportHandler(void);
-void APP_UserSetReportHandler(void);
