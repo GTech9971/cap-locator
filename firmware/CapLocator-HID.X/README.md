@@ -34,5 +34,5 @@ Cap Locator で使用する PIC16F1455 向けのカスタム HID ファームウ
 ## 備考
 
 - USB VID/PID はプレースホルダです（`VID 0x04D8`, `PID 0x1455`）。量産前に割り当てられた値に置き換えてください。
-- 構成ディスクリプタはセルフパワーを示す設定になっています。バスパワーのみの場合は `usb_descriptors.c` の `_DEFAULT | _SELF` を `_DEFAULT` に変更してください。
+- 構成ディスクリプタはバスパワー設定（`_DEFAULT` のみ）です。セルフパワーにする場合は `usb_descriptors.c` の属性を `_DEFAULT | _SELF` に変更してください。
 - `.gitignore` によりビルド成果物はリポジトリに含めません。
