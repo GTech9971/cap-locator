@@ -163,7 +163,7 @@ const USB_DEVICE_DESCRIPTOR device_dsc=
     0x0101,                 // Device release number in BCD format
     0x01,                   // Manufacturer string index
     0x02,                   // Product string index
-    0x00,                   // Device serial number string index
+    0x03,                   // Device serial number string index
     0x01                    // Number of possible configurations
 };
 
@@ -233,6 +233,12 @@ sizeof(sd002),USB_DESCRIPTOR_STRING,
 {'C','a','p',' ','L','o','c','a','t','o','r',' ','H','I','D'
 }};
 
+//Serial number string descriptor
+const struct{uint8_t bLength;uint8_t bDscType;uint16_t string[11];}sd003={
+sizeof(sd003),USB_DESCRIPTOR_STRING,
+{'S','N','-','C','A','P','2','5','0','0','1'
+}};
+
 //Class specific descriptor - HID 
 const struct{uint8_t report[HID_RPT01_SIZE];}hid_rpt01={
 {
@@ -264,7 +270,8 @@ const uint8_t *const USB_SD_Ptr[]=
 {
     (const uint8_t *const)&sd000,
     (const uint8_t *const)&sd001,
-    (const uint8_t *const)&sd002
+    (const uint8_t *const)&sd002,
+    (const uint8_t *const)&sd003
 };
 
 /** EOF usb_descriptors.c ***************************************************/
